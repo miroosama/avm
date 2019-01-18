@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 import "./AviumToken.sol";
 
 contract AviumTokenSale {
-  address admin;
+  address payable admin;
   AviumToken public tokenContract;
   uint256 public tokenPrice;
   uint256 public tokensSold;
@@ -30,14 +30,12 @@ contract AviumTokenSale {
       emit Sell(msg.sender, _numberOfTokens);
   }
 
-  /* function endSale() public {
+  function endSale() public {
       require(msg.sender == admin);
       require(tokenContract.transfer(admin, tokenContract.balanceOf(address(this))));
 
-    // UPDATE: Let's not destroy the contract here
-    // Just transfer the balance to the admin
-      selfdestruct(admin);
-    } */
 
+      admin.transfer(address(this).balance);
+  }
 
 }
