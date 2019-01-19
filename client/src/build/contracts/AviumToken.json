@@ -4913,12 +4913,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x8C70d47462Bb5E2e2D2d23BaE28E3FB8e303173F",
-      "transactionHash": "0x0db66696aa16780c8a1d92357b6dbccf255e3ba32e65b80685f6ecd67f1dbe8e"
+      "address": "0x8958aD064461457197f8b3c341E85709c7300899",
+      "transactionHash": "0x1eefeb67d9eb219a40a0c55bf08fe6add79c13ed2e2c2d298f2c4fcee82f4727"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-17T23:48:19.921Z",
+  "updatedAt": "2019-01-19T02:59:56.568Z",
   "devdoc": {
     "methods": {}
   },
