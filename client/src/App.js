@@ -13,7 +13,9 @@ class App extends Component {
      contractSale: null,
      symbol: "" ,
      amount: "",
-     totalSupply: ""
+     totalSupply: "",
+     balance: "",
+     success: ""
    };
 
   componentDidMount = async () => {
@@ -54,32 +56,25 @@ class App extends Component {
     const { accounts, contractToken, contractSale } = this.state;
     // this.setState({symbol: this.state.contractToken._jsonInterface[3].name})
     // console.log(contractToken.methods.symbol().call().then(resp =>{console.log(resp)}))
-        console.log(contractSale._address)
+    console.log(contractSale._address)
     console.log(contractToken._address)
     console.log(accounts[0])
     console.log(contractSale)
 
-    contractToken.methods.totalSupply().call().then(res => {this.setState({totalSupply: res})})
+    // contractToken.methods.totalSupply().call().then(res => {this.setState({totalSupply: res})})
+    contractToken.methods.balanceOf(accounts[0]).call().then(res=>{this.setState({balance: res})})
+    contractToken.methods.balanceOf(contractSale._address).call().then(res=>{this.setState({totalSupply: res})})
   };
 
   handlePurchase = async (e) => {
     e.preventDefault()
     const { accounts, contractToken, contractSale } = this.state;
-    // console.log(contractToken.methods.totalSupply().call().then(res => {console.log(res)}))
-    console.log(this.state.totalSupply)
-    console.log(contractSale.methods.buyTokens(10))
     var tokenPrice = 1000000000000000
-    // console.log(contractToken.methods.balanceOf(accounts[0]).call().then(res=>{console.log(res)}))s
-    // console.log(contractToken.methods.transfer(contractToken._address, (this.state.totalSupply - 250000)).send({from: accounts[0]}).then(res=>{console.log(res)
-    // contractSale.methods.buyTokens(10).send({from: accounts[1], value: 10 * 1000000000000000}).then(res =>{console.log(res)})
-    // }))
-    // console.log(contractSale.methods.buyTokens(10).send({from: accounts[0]}).then(res =>{console.log(res)}))
-    console.log(contractSale.methods.buyTokens(10).send({from: accounts[0], value: (10 * tokenPrice) , gas: 500000 }).then(res =>{console.log(res)}))
-    // console.log(contractSale.methods.tokenPrice().call().then(res=>{console.log(res)}).catch(err=>{console.log(err)}))
-    // console.log(contractToken.methods.symbol().call().then(resp =>{console.log(resp)}))
-
-    // contractSale.methods.buyTokens()
-    // contractSale.methods.buyTokens(this.state.amount).call.then(res => {console.log(res)})
+    contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 })
+    .then(res =>{
+      let newBalance = (this.state.balance += this.state.amount)
+      this.setState({success: res, balance: newBalance})})
+    console.log(this.state.success)
   }
 
   handleAmount = (e) =>{
@@ -94,10 +89,24 @@ class App extends Component {
       <div className="App">
         <h1>AVEMCOIN</h1>
         <h2>Purchase Token</h2>
+        <h5>
+          Total AVM Available: {this.state.totalSupply}
+        </h5>
         <form>
           <input type="number" name="amount" onChange={this.handleAmount}/>
           <input onClick={this.handlePurchase} type="submit" value="Submit"/>
         </form>
+        <div>
+          <ul>
+            <p>
+            Your account: {this.state.accounts[0]}
+            </p>
+            <p>
+              Your balance: {this.state.balance}
+            </p>
+          </ul>
+
+        </div>
       </div>
     );
   }
