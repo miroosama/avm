@@ -73,7 +73,7 @@ class App extends Component {
     contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 })
     .then(res =>{
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
-      let newSupply = (parseFloat(this.state.totalSupply) + parseFloat(this.state.amount))
+      let newSupply = (parseFloat(this.state.totalSupply) - parseFloat(this.state.amount))
       this.setState({success: res, balance: newBalance, totalSupply: newSupply})})
     console.log(this.state.success)
   }
