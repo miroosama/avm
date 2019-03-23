@@ -72,8 +72,9 @@ class App extends Component {
     var tokenPrice = 1000000000000000
     contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 })
     .then(res =>{
-      let newBalance = (this.state.balance += this.state.amount)
-      this.setState({success: res, balance: newBalance})})
+      let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
+      let newSupply = (parseFloat(this.state.totalSupply) + parseFloat(this.state.amount))
+      this.setState({success: res, balance: newBalance, totalSupply: newSupply})})
     console.log(this.state.success)
   }
 
@@ -113,3 +114,14 @@ class App extends Component {
 }
 
 export default App;
+
+
+// if contract error run a truffle migrate --reset
+// AviumTokenSale.deployed().then(function(i){tokenSale=i})
+// truffle(development)> AviumToken.deployed().then(function(i){token=i})
+// undefined
+// truffle(development)> web3.eth.getAccounts().then(function(accounts){ acc1 = accounts[0]})
+// undefined
+// truffle(development)> tokensAvailable = 750000
+// 750000
+// truffle(development)> token.transfer(tokenSale.address, tokensAvailable, { from: acc1})
