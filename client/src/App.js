@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AviumTokenContract from "./build/contracts/AviumToken.json";
 import AviumTokenSaleContract from "./build/contracts/AviumTokenSale.json";
 import getWeb3 from "./utils/getWeb3";
+import QRTX from "./QRTX.js"
 
 import "./App.css";
 
@@ -60,10 +61,11 @@ class App extends Component {
     console.log(contractToken._address)
     console.log(accounts[0])
     console.log(contractSale)
-
+    console.log(contractToken.methods)
     // contractToken.methods.totalSupply().call().then(res => {this.setState({totalSupply: res})})
     contractToken.methods.balanceOf(accounts[0]).call().then(res=>{this.setState({balance: res})})
     contractToken.methods.balanceOf(contractSale._address).call().then(res=>{this.setState({totalSupply: res})})
+    console.log(this.state.web3.eth.getBalance(accounts[0]))
   };
 
   handlePurchase = async (e) => {
@@ -74,6 +76,7 @@ class App extends Component {
     .then(res =>{
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
       let newSupply = (parseFloat(this.state.totalSupply) - parseFloat(this.state.amount))
+      console.log(res)
       this.setState({success: res, balance: newBalance, totalSupply: newSupply})})
     console.log(this.state.success)
   }
@@ -108,6 +111,7 @@ class App extends Component {
           </ul>
 
         </div>
+        <QRTX />
       </div>
     );
   }
@@ -125,3 +129,17 @@ export default App;
 // truffle(development)> tokensAvailable = 750000
 // 750000
 // truffle(development)> token.transfer(tokenSale.address, tokensAvailable, { from: acc1})
+
+
+
+
+// blockHash: "0x8e2e13cf060a851e9815f7a2fde6843b7ebb680d4f5cb9af81d556633a7974e7"
+// blockNumber: 17
+// contractAddress: null
+// cumulativeGasUsed: 46374
+// events: {0: {…}, Sell: {…}}
+// gasUsed: 46374
+// logsBloom: "0x04000000000000000000000000800000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000008000000000000000000002000000000000000000000000800000000000000000000040000000000000000100000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000010000000000000000000000000000002000000000000000000000000000000000000000000000001000000000100000000000010000002000000004000000000000000000000000000000000"
+// status: true
+// transactionHash: "0x14947c261c6cfbd5e0121b8bf18871949c872ecb80759a54e2b74610404509ea"
+// transactionIndex: 0
