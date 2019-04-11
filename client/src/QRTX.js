@@ -6,26 +6,11 @@ class QRTX extends Component {
 
 
   handleQRGenerator = () =>{
-    const qrCode = qr.toCanvas({
+    const qrCode = qr.toCanvas(  {
       "to": "0x8958aD064461457197f8b3c341E85709c7300899",
       "from": "0xB9dC3F3b3cAdeB7FEFBE0A78BF70fD2635B148EF",
-      "value": 0,
       "gas": 100000,
-      "mode": "contract_function",
-      "functionSignature": {
-        "name": "transfer",
-        "payable": false,
-        "args": [
-          {
-            "name": "to",
-            "type": "address"
-          },
-          {
-            "name": "value",
-            "type": "uint"
-          }
-        ]
-      },
+      "mode": "erc20__transfer",
       "argsDefaults": [
         {
           "name": "to",
@@ -38,6 +23,7 @@ class QRTX extends Component {
       ]
     }, {selector: '#my-qr-code'})
   }
+
 
   render() {
     return (

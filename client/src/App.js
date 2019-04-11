@@ -111,7 +111,7 @@ class App extends Component {
           </ul>
 
         </div>
-        <QRTX />
+        <QRTX account={this.state.accounts[0]}/>
       </div>
     );
   }
