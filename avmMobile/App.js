@@ -31,7 +31,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Button onClick={this.handleScanner} title="Scan">Scan</Button>
+        <Button onPress={this.handleScanner} title="Scan">Scan</Button>
         {this.state.scan ? <QRScan /> : null}
       </View>
     );
