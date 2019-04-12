@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import QRScan from './QRScan.js'
 
 const instructions = Platform.select({
@@ -19,13 +19,20 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  state = {
+    scan: false
+  }
+
+  handleScanner = () => {
+    this.setState({
+      scan: !this.state.scan
+      })
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome Osama, to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-        <QRScan />
+        <Button onClick={this.handleScanner} title="Scan">Scan</Button>
+        {this.state.scan ? <QRScan /> : null}
       </View>
     );
   }
