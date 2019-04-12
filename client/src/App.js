@@ -57,14 +57,15 @@ class App extends Component {
     const { accounts, contractToken, contractSale } = this.state;
     // this.setState({symbol: this.state.contractToken._jsonInterface[3].name})
     // console.log(contractToken.methods.symbol().call().then(resp =>{console.log(resp)}))
-    console.log(contractSale._address)
-    console.log(contractToken._address)
-    console.log(accounts[0])
-    console.log(contractSale)
-    console.log(contractToken.methods)
+    // console.log(contractSale._address)
+    // console.log(contractToken._address)
+    // console.log(accounts[0])
+    // console.log(contractSale)
+    // console.log(contractToken.methods)
+    // console.log(this.state.accounts[0])
     // contractToken.methods.totalSupply().call().then(res => {this.setState({totalSupply: res})})
-    contractToken.methods.balanceOf(accounts[0]).call().then(res=>{this.setState({balance: res})})
-    contractToken.methods.balanceOf(contractSale._address).call().then(res=>{this.setState({totalSupply: res})})
+    contractToken.methods.balanceOf(this.state.accounts[0]).call().then(res=>{this.setState({balance: parseInt(res)})})
+    contractToken.methods.balanceOf(contractSale.address).call().then(res=>{this.setState({totalSupply: parseInt(res)})})
     console.log(this.state.web3.eth.getBalance(accounts[0]))
   };
 
