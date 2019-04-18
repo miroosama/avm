@@ -86,6 +86,13 @@ class App extends Component {
     this.setState({ amount: e.target.value})
   }
 
+  handleUnit = (e) =>{
+    e.preventDefault(e)
+    const { accounts, contractToken, contractSale } = this.state;
+    console.log(contractToken)
+    contractToken.methods.pendingPayment(0xc91033ed07DA0A4664ab58c69441F3e6180492F7, 10).send({from: accounts[0]}).then(res => console.log(res))
+  }
+
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -100,6 +107,10 @@ class App extends Component {
         <form>
           <input type="number" name="amount" onChange={this.handleAmount}/>
           <input onClick={this.handlePurchase} type="submit" value="Submit"/>
+        </form>
+        <form>
+          <input type="number" name="amount" onChange={this.handleAmount}/>
+          <input onClick={this.handleUnit} type="submit" value="Submit"/>
         </form>
         <div>
           <ul>
