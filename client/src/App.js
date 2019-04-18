@@ -90,7 +90,7 @@ class App extends Component {
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
     console.log(contractToken)
-    contractToken.methods.pendingPayment(0xc91033ed07DA0A4664ab58c69441F3e6180492F7, 10).send({from: accounts[0]}).then(res => console.log(res))
+    contractToken.methods.transfer("0xc91033ed07DA0A4664ab58c69441F3e6180492F7", 10).send({from: accounts[0]}).then(res => console.log(res))
   }
 
   render() {
