@@ -41,8 +41,10 @@ class App extends Component {
         deployedNetwork && deployedNetwork2.address,
       );
 
+
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
+      console.log(AviumTokenContract.abi)
       this.setState({ web3, accounts, contractToken: instanceToken, contractSale: instanceTokenSale }, this.runExample);
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -59,9 +61,10 @@ class App extends Component {
     // console.log(contractToken.methods.symbol().call().then(resp =>{console.log(resp)}))
     // console.log(contractSale._address)
     // console.log(contractToken._address)
+    // contractToken.methods.getUnits(this.state.accounts[0], "0xc91033ed07DA0A4664ab58c69441F3e6180492F7").call().then(res=>{console.log(res)})
     // console.log(accounts[0])
     // console.log(contractSale)
-    // console.log(contractToken.methods)
+    console.log(contractToken)
     // console.log(this.state.accounts[0])
     // contractToken.methods.totalSupply().call().then(res => {this.setState({totalSupply: res})})
     contractToken.methods.balanceOf(this.state.accounts[0]).call().then(res=>{this.setState({balance: parseInt(res)})})
@@ -89,11 +92,19 @@ class App extends Component {
   handleUnit = (e) =>{
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
-    console.log(contractToken)
-    contractToken.methods.transfer("0xc91033ed07DA0A4664ab58c69441F3e6180492F7", 10).send({from: accounts[0]}).then(res => console.log(res))
+    console.dir(contractToken.methods.pendingPayment)
+    contractToken.methods._pendingPayment("0xc91033ed07DA0A4664ab58c69441F3e6180492F7", 10).send({from: accounts[0]}).then(res => console.log(res))
+  }
+
+  handleApproval = (e) => {
+    e.preventDefault(e)
+    const { accounts, contractToken, contractSale } = this.state;
+    contractToken.methods._makePayment(accounts[0], "0xc91033ed07DA0A4664ab58c69441F3e6180492F7").send({from: accounts[0]}).then(res => console.log(res))
+
   }
 
   render() {
+
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
@@ -112,6 +123,7 @@ class App extends Component {
           <input type="number" name="amount" onChange={this.handleAmount}/>
           <input onClick={this.handleUnit} type="submit" value="Submit"/>
         </form>
+        <input onClick={this.handleApproval} type="submit" value="Approve"/>
         <div>
           <ul>
             <p>
@@ -142,7 +154,7 @@ export default App;
 // 750000
 // truffle(development)> token.transfer(tokenSale.address, tokensAvailable, { from: acc1})
 
-
+// build folder needs to be dragged into client folder
 
 
 // blockHash: "0x8e2e13cf060a851e9815f7a2fde6843b7ebb680d4f5cb9af81d556633a7974e7"

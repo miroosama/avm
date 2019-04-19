@@ -18,31 +18,15 @@ contract AviumToken {
     );
 
 
-
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
-    mapping(address => uint256) public units;
+    mapping(address => mapping(address => uint256)) public units;
 
 
     constructor(uint256 _initialSupply) public {
         balanceOf[msg.sender] = _initialSupply;
         totalSupply = _initialSupply;
     }
-
-    function pendingPayment(address _to, uint256 _value) public {
-      units[_to] += _value;
-
-    }
-
-    function makePayment(address _from, address _to) public returns (bool success) {
-      require(msg.sender == _from);
-      uint256 total = units[_to];
-
-      emit Transfer(msg.sender, _to, total);
-
-      return true;
-    }
-
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
         require(balanceOf[msg.sender] >= _value);
@@ -75,5 +59,27 @@ contract AviumToken {
         emit Transfer(_from, _to, _value);
 
         return true;
+    }
+
+    function _pendingPayment(address _to, uint256 _value) public {
+      units[msg.sender][_to] += _value;
+    }
+
+    function _getUnits(address _owner,address _to) external view returns(uint[] memory) {
+      uint[] memory result = new uint[](units[_owner][_to]);
+
+      return result;
+    }
+
+    function _makePayment(address _from, address _to) public returns (bool success) {
+      require(msg.sender == _from);
+      uint256 total = units[msg.sender][_to];
+      require(balanceOf[msg.sender] >= total);
+      balanceOf[msg.sender] -= total;
+      balanceOf[_to] += total;
+
+      emit Transfer(msg.sender, _to, total);
+
+      return true;
     }
 }
