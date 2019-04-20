@@ -57,16 +57,6 @@ class App extends Component {
 
   runExample = async () => {
     const { accounts, contractToken, contractSale } = this.state;
-    // this.setState({symbol: this.state.contractToken._jsonInterface[3].name})
-    // console.log(contractToken.methods.symbol().call().then(resp =>{console.log(resp)}))
-    // console.log(contractSale._address)
-    // console.log(contractToken._address)
-    // contractToken.methods.getUnits(this.state.accounts[0], "0xc91033ed07DA0A4664ab58c69441F3e6180492F7").call().then(res=>{console.log(res)})
-    // console.log(accounts[0])
-    // console.log(contractSale)
-    console.log(contractToken)
-    // console.log(this.state.accounts[0])
-    // contractToken.methods.totalSupply().call().then(res => {this.setState({totalSupply: res})})
     contractToken.methods.balanceOf(this.state.accounts[0]).call().then(res=>{this.setState({balance: parseInt(res)})})
     contractToken.methods.balanceOf(contractSale.address).call().then(res=>{this.setState({totalSupply: parseInt(res)})})
     console.log(this.state.web3.eth.getBalance(accounts[0]))

@@ -80,6 +80,8 @@ contract AviumToken {
 
       emit Transfer(msg.sender, _to, total);
 
+      units[msg.sender][_to] = 0;
+
       return true;
     }
 }
