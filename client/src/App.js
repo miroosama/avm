@@ -4,8 +4,10 @@ import AviumTokenSaleContract from "./build/contracts/AviumTokenSale.json";
 import getWeb3 from "./utils/getWeb3";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
 import QRTX from "./QRTX.js"
 import './style.css'
+import UnitFormModal from "./UnitFormModal.js"
 
 import "./App.css";
 
@@ -19,7 +21,8 @@ class App extends Component {
      amount: "",
      totalSupply: "",
      balance: "",
-     success: ""
+     success: "",
+     unitModal: false,
    };
 
   componentDidMount = async () => {
@@ -93,6 +96,15 @@ class App extends Component {
 
   }
 
+  closeModal = () =>{
+    this.setState({openUnitModal: !this.state.unitModal})
+    console.log("hi")
+  }
+
+  openUnitModal = () => {
+    this.setState({unitModal: !this.state.unitModal})
+  }
+
   render() {
 
     if (!this.state.web3) {
@@ -102,13 +114,12 @@ class App extends Component {
       <div className="App">
         <div className="bkg" />
         <div className="me" />
-        <div className="info">
-        <h1>AVEMCOIN</h1>
+        <h1 style={{fontfamily:"Open Sans"}}>AVEMCOIN</h1>
         <h2>Purchase Token</h2>
         <h5>
           Total AVM Available: {this.state.totalSupply}
         </h5>
-        <Form onChange={this.handleAmount}>
+        <Form style={{width: "50%", justifyContent: "center"}} onChange={this.handleAmount}>
         <Form.Group md="4" controlId="TokenPurchase">
           <Form.Label>Purchase Amount</Form.Label>
           <Form.Control type="number" placeholder="Token Amount" />
@@ -117,12 +128,11 @@ class App extends Component {
           Submit
         </Button>
       </Form>
-
-        <form>
-          <input type="number" name="amount" onChange={this.handleAmount}/>
-          <input onClick={this.handleUnit} type="submit" value="Submit"/>
-        </form>
-        <input onClick={this.handleApproval} type="submit" value="Approve"/>
+      <div>
+       <Button variant="dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
+        {this.state.unitModal ? <UnitFormModal closeModal={this.closeModal} /> : null }
+         <Button variant="dark" onClick={this.handleApproval}>Approve</Button>
+        </div>
         <div>
           <ul>
             <p>
@@ -135,11 +145,11 @@ class App extends Component {
 
         </div>
         <QRTX account={this.state.accounts[0]}/>
-        </div>
       </div>
     );
   }
 }
+
 
 export default App;
 
