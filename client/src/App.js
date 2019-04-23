@@ -23,6 +23,8 @@ class App extends Component {
      balance: "",
      success: "",
      unitModal: false,
+     approvalAddress: "",
+     addressInput: false
    };
 
   componentDidMount = async () => {
@@ -89,11 +91,11 @@ class App extends Component {
     contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
   }
 
-  handleApproval = (e, address) => {
+  handleApproval = (e) => {
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
-    contractToken.methods._makePayment(accounts[0], "0xc91033ed07DA0A4664ab58c69441F3e6180492F7").send({from: accounts[0]}).then(res => console.log(res))
-
+    contractToken.methods._makePayment(accounts[0], this.state.approvalAddress).send({from: accounts[0]}).then(res => console.log(res))
+    this.setState({approvalAddress: "", addressInput: false})
   }
 
   closeModal = (action, account, amount) =>{
@@ -105,6 +107,14 @@ class App extends Component {
 
   openUnitModal = () => {
     this.setState({unitModal: !this.state.unitModal})
+  }
+
+  handleInputButton = () => {
+    this.setState({addressInput: !this.state.addressInput})
+  }
+
+  handleAddressInput = (e) =>{
+    this.setState({approvalAddress: e.target.value})
   }
 
   render() {
@@ -134,7 +144,20 @@ class App extends Component {
        <Button variant="outline-dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
         {this.state.unitModal ? <UnitFormModal closeModal={this.closeModal} /> : null }
       </div>
-         <Button variant="outline-dark" onClick={this.handleApproval}>Approve Unit Payment</Button>
+         <Button variant="outline-dark" onClick={this.handleInputButton}>Approve Unit Payment</Button>
+         {this.state.addressInput ?
+           <div>
+           <Form style={{ width: "50%", justifyContent: "center"}} onChange={this.handleAddressInput}>
+           <Form.Group md="4" controlId="SendUnitPayment">
+             <Form.Label>Address To</Form.Label>
+             <Form.Control style={{backgroundColor: "transparent"}} type="string" placeholder="Address" />
+           </Form.Group>
+           <Button variant="outline-dark" type="submit" onClick={this.handleApproval}>
+             Submit</Button>
+           </Form>
+           </div>
+             : null
+         }
         <div>
           <ul>
             <p>
