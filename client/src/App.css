@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  font-family: rajdhani, sans-serif;
+  font-style: normal;
+  font-weight: 300;
 }
 
 .App-logo {
@@ -16,6 +19,9 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-family: transat, sans-serif;
+  font-style: normal;
+  font-weight: 300;
 }
 
 .App-link {

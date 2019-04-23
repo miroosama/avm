@@ -1,52 +1,50 @@
 import React, { Component } from 'react';
 import { Modal, Button, Dropdown, Form, Alert } from 'react-bootstrap'
+import './style.css';
+import "./App.css";
 
 class UnitFormModal extends Component {
 
   state = {
     error: false,
-    from: "From",
-    to: "To",
+    account: "",
     amount: ""
   }
 
-  handleSelection = (event) => {
-    this.setState({
-    from:event.target.id
-    })
+  handleAddress = (e) => {
+    this.setState({account: e.target.value})
   }
 
-  handleSelection2 = (event) => {
-    this.setState({
-      to:event.target.id
-    })
-  }
-
-  handleChange = (e) => {
+  handleAmount = (e) => {
     this.setState({amount: e.target.value})
   }
 
 
 
-
   render() {
     return (
-      <div>
-        <Modal show={true} onHide={() => {this.props.closeModal("transferModal")}}>
+      <div className="App">
+        <Modal style={{opacity:".8"}} show={true} onHide={() => {this.props.closeModal("cancel")}}>
           <Modal.Header>
-            <Modal.Title>Transfer</Modal.Title>
+            <Modal.Title>Process Unit</Modal.Title>
           </Modal.Header>
             <Modal.Body>
-              <Form onChange={this.handleChange}>
+              <Form onChange={this.handleAddress}>
                 <Form.Group controlId="exampleForm.ControlInput1">
-                  <Form.Label>Amount</Form.Label>
+                  <Form.Label>Address</Form.Label>
+                  <Form.Control type="number" placeholder="0" />
+                </Form.Group>
+              </Form>
+              <Form onChange={this.handleAmount}>
+                <Form.Group controlId="exampleForm.ControlInput1">
+                  <Form.Label>Value</Form.Label>
                   <Form.Control type="number" placeholder="0" />
                 </Form.Group>
               </Form>
             </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => {this.props.closeModal("transferModal")}}>Close</Button>
-            <Button onClick={this.handleSave} variant="primary">Save changes</Button>
+            <Button variant="secondary" onClick={() => {this.props.closeModal("cancel")}}>Close</Button>
+            <Button onClick={() => {this.props.closeModal("process", this.state.account, this.state.amount)}} variant="primary">Save changes</Button>
           </Modal.Footer>
         </Modal>;
       </div>

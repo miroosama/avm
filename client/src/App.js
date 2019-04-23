@@ -83,10 +83,10 @@ class App extends Component {
     this.setState({ amount: e.target.value})
   }
 
-  handleUnit = (e) =>{
+  handleUnit = (e, account, amount) =>{
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
-    contractToken.methods._pendingPayment("0xc91033ed07DA0A4664ab58c69441F3e6180492F7", 10).send({from: accounts[0]}).then(res => console.log(res))
+    contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
   }
 
   handleApproval = (e) => {
@@ -96,9 +96,11 @@ class App extends Component {
 
   }
 
-  closeModal = () =>{
-    this.setState({openUnitModal: !this.state.unitModal})
-    console.log("hi")
+  closeModal = (action, account, amount) =>{
+    this.setState({unitModal: !this.state.unitModal})
+    if(action == "process"){
+      this.handleUnit(account, amount)
+    }
   }
 
   openUnitModal = () => {
@@ -106,7 +108,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log(this.state.unitModal)
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
@@ -114,25 +116,25 @@ class App extends Component {
       <div className="App">
         <div className="bkg" />
         <div className="me" />
-        <h1 style={{fontfamily:"Open Sans"}}>AVEMCOIN</h1>
+        <h1>AVEMCOIN</h1>
         <h2>Purchase Token</h2>
         <h5>
           Total AVM Available: {this.state.totalSupply}
         </h5>
-        <Form style={{width: "50%", justifyContent: "center"}} onChange={this.handleAmount}>
+        <Form style={{ width: "50%", justifyContent: "center"}} onChange={this.handleAmount}>
         <Form.Group md="4" controlId="TokenPurchase">
           <Form.Label>Purchase Amount</Form.Label>
-          <Form.Control type="number" placeholder="Token Amount" />
+          <Form.Control style={{backgroundColor: "transparent"}} type="number" placeholder="Token Amount" />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={this.handlePurchase}>
+        <Button variant="outline-dark" type="submit" onClick={this.handlePurchase}>
           Submit
         </Button>
       </Form>
       <div>
-       <Button variant="dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
+       <Button variant="outline-dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
         {this.state.unitModal ? <UnitFormModal closeModal={this.closeModal} /> : null }
-         <Button variant="dark" onClick={this.handleApproval}>Approve</Button>
-        </div>
+      </div>
+         <Button variant="outline-dark" onClick={this.handleApproval}>Approve</Button>
         <div>
           <ul>
             <p>
@@ -142,7 +144,6 @@ class App extends Component {
               Your balance: {this.state.balance}
             </p>
           </ul>
-
         </div>
         <QRTX account={this.state.accounts[0]}/>
       </div>

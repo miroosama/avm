@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import EthereumQRPlugin from 'ethereum-qr-code'
+import Button from 'react-bootstrap/Button'
 const qr = new EthereumQRPlugin()
 
 class QRTX extends Component {
@@ -28,7 +29,7 @@ class QRTX extends Component {
   render() {
     return (
       <div className="my-qr-code" id="my-qr-code">
-        <button onClick={this.handleQRGenerator}>Generate QR</button>
+        <Button variant="outline-dark" onClick={this.handleQRGenerator}>Generate QR</Button>
       </div>
     );
   }
