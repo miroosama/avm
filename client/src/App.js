@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import AviumTokenContract from "./build/contracts/AviumToken.json";
 import AviumTokenSaleContract from "./build/contracts/AviumTokenSale.json";
 import getWeb3 from "./utils/getWeb3";
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 import QRTX from "./QRTX.js"
+import './style.css'
 
 import "./App.css";
 
@@ -31,14 +34,13 @@ class App extends Component {
       const networkId = await web3.eth.net.getId();
 
       const deployedNetwork = AviumTokenContract.networks[networkId];
-      const deployedNetwork2 = AviumTokenSaleContract.networks[networkId]
       const instanceToken = new web3.eth.Contract(
         AviumTokenContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
       const instanceTokenSale = new web3.eth.Contract(
         AviumTokenSaleContract.abi,
-        deployedNetwork && deployedNetwork2.address,
+        deployedNetwork && deployedNetwork.address,
       );
 
 
@@ -70,7 +72,6 @@ class App extends Component {
     .then(res =>{
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
       let newSupply = (parseFloat(this.state.totalSupply) - parseFloat(this.state.amount))
-      console.log(res)
       this.setState({success: res, balance: newBalance, totalSupply: newSupply})})
     console.log(this.state.success)
   }
@@ -82,7 +83,6 @@ class App extends Component {
   handleUnit = (e) =>{
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
-    console.dir(contractToken.methods.pendingPayment)
     contractToken.methods._pendingPayment("0xc91033ed07DA0A4664ab58c69441F3e6180492F7", 10).send({from: accounts[0]}).then(res => console.log(res))
   }
 
@@ -100,15 +100,24 @@ class App extends Component {
     }
     return (
       <div className="App">
+        <div className="bkg" />
+        <div className="me" />
+        <div className="info">
         <h1>AVEMCOIN</h1>
         <h2>Purchase Token</h2>
         <h5>
           Total AVM Available: {this.state.totalSupply}
         </h5>
-        <form>
-          <input type="number" name="amount" onChange={this.handleAmount}/>
-          <input onClick={this.handlePurchase} type="submit" value="Submit"/>
-        </form>
+        <Form onChange={this.handleAmount}>
+        <Form.Group md="4" controlId="TokenPurchase">
+          <Form.Label>Purchase Amount</Form.Label>
+          <Form.Control type="number" placeholder="Token Amount" />
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={this.handlePurchase}>
+          Submit
+        </Button>
+      </Form>
+
         <form>
           <input type="number" name="amount" onChange={this.handleAmount}/>
           <input onClick={this.handleUnit} type="submit" value="Submit"/>
@@ -126,6 +135,7 @@ class App extends Component {
 
         </div>
         <QRTX account={this.state.accounts[0]}/>
+        </div>
       </div>
     );
   }
