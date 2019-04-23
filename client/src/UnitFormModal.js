@@ -32,7 +32,7 @@ class UnitFormModal extends Component {
               <Form onChange={this.handleAddress}>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Address</Form.Label>
-                  <Form.Control type="number" placeholder="0" />
+                  <Form.Control type="string" placeholder="0" />
                 </Form.Group>
               </Form>
               <Form onChange={this.handleAmount}>
@@ -43,8 +43,8 @@ class UnitFormModal extends Component {
               </Form>
             </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => {this.props.closeModal("cancel")}}>Close</Button>
-            <Button onClick={() => {this.props.closeModal("process", this.state.account, this.state.amount)}} variant="primary">Save changes</Button>
+            <Button variant="light" onClick={() => {this.props.closeModal("cancel")}}>Close</Button>
+            <Button onClick={() => {this.props.closeModal("process", this.state.account, this.state.amount)}} variant="dark">Save changes</Button>
           </Modal.Footer>
         </Modal>;
       </div>

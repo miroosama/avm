@@ -89,7 +89,7 @@ class App extends Component {
     contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
   }
 
-  handleApproval = (e) => {
+  handleApproval = (e, address) => {
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
     contractToken.methods._makePayment(accounts[0], "0xc91033ed07DA0A4664ab58c69441F3e6180492F7").send({from: accounts[0]}).then(res => console.log(res))
@@ -134,7 +134,7 @@ class App extends Component {
        <Button variant="outline-dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
         {this.state.unitModal ? <UnitFormModal closeModal={this.closeModal} /> : null }
       </div>
-         <Button variant="outline-dark" onClick={this.handleApproval}>Approve</Button>
+         <Button variant="outline-dark" onClick={this.handleApproval}>Approve Unit Payment</Button>
         <div>
           <ul>
             <p>
