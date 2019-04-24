@@ -3,7 +3,7 @@ height: 100%;
 width:100%;
 font-family: rajdhani, sans-serif;
 font-style: normal;
-font-weight: 300;
+font-weight: bold;
 }
 
 .me {
@@ -34,7 +34,7 @@ form {
 .modal {
   font-family: rajdhani, sans-serif;
   font-style: normal;
-  font-weight: 300;
+  font-weight: bold;
   background-color: transparent;
 }
 
