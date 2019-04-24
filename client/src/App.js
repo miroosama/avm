@@ -147,38 +147,34 @@ class App extends Component {
            </Button>
       </Form>
       <div>
-        <Button style={{fontWeight: "bold"}} variant="outline-dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
+        <Button style={{marginBottom: "20px", fontWeight: "bold"}} variant="outline-dark" onClick={this.openUnitModal}>Manual Unit Entry</Button>
           {this.state.unitModal ? <UnitFormModal closeModal={this.closeModal} /> : null }
       </div>
-         <Button style={{fontWeight: "bold"}} variant="outline-dark" onClick={this.handleInputButton}>Approve Unit Payment</Button>
+         <Button style={{ marginBottom: "20px", fontWeight: "bold"}} variant="outline-dark" onClick={this.handleInputButton}>Approve Unit Payment</Button>
          {this.state.addressInput ?
            <div>
-             <Form style={{width: "50%", justifyContent: "center"}} onChange={this.handleAddressInput}>
+             <Form style={{ width: "50%", justifyContent: "center"}} onChange={this.handleAddressInput}>
                <Form.Group md="4" controlId="SendUnitPayment">
                  <Form.Label>Address To</Form.Label>
                  <Form.Control style={{backgroundColor: "transparent"}} type="string" placeholder="Address" />
                </Form.Group>
-           <Button style={{fontWeight: "bold"}} variant="outline-dark" type="submit" onClick={this.handleApproval}>
+           <Button style={{marginBottom: "20px", fontWeight: "bold"}} variant="outline-dark" type="submit" onClick={this.handleApproval}>
              Submit
            </Button>
             </Form>
            </div>
              : null
          }
-        <div className="App">
-          <ul>
-            <p>
+         <div className="App">
             Your account: {this.state.accounts[0]}
-            </p>
-            <p>
-              Your balance: {this.state.balance}
-            </p>
-          </ul>
         </div>
-        <div>
-        <Button style={{fontWeight: "bold"}} variant="outline-dark" onClick={() => {this.openUnitModal("qr")}}>Create QR</Button>
-          {this.state.qrModal ? <QRModal closeModal={this.closeModal} accountFrom={this.state.accounts[0]} /> : null }
-      </div>
+          <div className="App">
+            Your balance: {this.state.balance}
+          </div>
+          <div>
+          <Button style={{fontWeight: "bold"}} variant="outline-dark" onClick={() => {this.openUnitModal("qr")}}>Create QR</Button>
+            {this.state.qrModal ? <QRModal closeModal={this.closeModal} accountFrom={this.state.accounts[0]} /> : null }
+        </div>
       </div>
     );
   }

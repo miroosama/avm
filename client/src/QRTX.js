@@ -28,7 +28,7 @@ class QRTX extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
         <div className="my-qr-code" id="my-qr-code">
         </div>
         <Button style={{fontWeight: "bold"}} variant="outline-dark" onClick={this.handleQRGenerator}>Generate QR</Button>
