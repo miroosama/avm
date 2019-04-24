@@ -5,10 +5,11 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "ethereum-qr-code": "^0.3.0",
-    "react-bootstrap": "^1.0.0-beta.8",
     "react": "^16.7.0-alpha.2",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.7.0-alpha.2",
     "react-scripts": "^3.0.0",
+    "truffle": "^5.0.13",
     "web3": "^1.0.0-beta.52"
   },
   "scripts": {

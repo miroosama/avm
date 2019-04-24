@@ -39,15 +39,15 @@ class App extends Component {
       console.log(accounts)
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-
-      const deployedNetwork = AviumTokenContract.networks[networkId];
+      const deployedNetwork = AviumTokenContract.networks[networkId]
+      const deployedNetwork2 = AviumTokenSaleContract.networks[networkId];
       const instanceToken = new web3.eth.Contract(
         AviumTokenContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
       const instanceTokenSale = new web3.eth.Contract(
         AviumTokenSaleContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork2.address,
       );
 
 
@@ -68,13 +68,12 @@ class App extends Component {
     const { accounts, contractToken, contractSale } = this.state;
     contractToken.methods.balanceOf(this.state.accounts[0]).call().then(res=>{this.setState({balance: parseInt(res)})})
     contractToken.methods.balanceOf(contractSale.address).call().then(res=>{this.setState({totalSupply: parseInt(res)})})
-    console.log(this.state.web3.eth.getBalance(accounts[0]))
   };
 
   handlePurchase = async (e) => {
     e.preventDefault()
     const { accounts, contractToken, contractSale } = this.state;
-    var tokenPrice = 1000000000000000
+    var tokenPrice = 10000000000000000
     contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 })
     .then(res =>{
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
@@ -183,6 +182,12 @@ class App extends Component {
 
 export default App;
 
+
+//rinkeby address
+//24965a52d85b612bae2f80813683ff2ce126c12c
+//0x24965a52d85b612bae2f80813683ff2ce126c12c
+
+// 0x4738a6634597C86Db71D2188b86523c2518fCef2
 
 // if contract error run a truffle migrate --reset
 // AviumTokenSale.deployed().then(function(i){tokenSale=i})
