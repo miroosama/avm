@@ -73,7 +73,8 @@ class App extends Component {
   handlePurchase = async (e) => {
     e.preventDefault()
     const { accounts, contractToken, contractSale } = this.state;
-    var tokenPrice = 10000000000000000
+    var tokenPrice = 1000000000000000
+    console.log(accounts[0], this.state.amount)
     contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 })
     .then(res =>{
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
