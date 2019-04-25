@@ -75,12 +75,10 @@ class App extends Component {
     const { accounts, contractToken, contractSale } = this.state;
     var tokenPrice = 1000000000000000
     console.log(accounts[0], this.state.amount)
-    contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 })
-    .then(res =>{
+    contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 }, (res) => {
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
       let newSupply = (parseFloat(this.state.totalSupply) - parseFloat(this.state.amount))
-      this.setState({success: res, balance: newBalance, totalSupply: newSupply})})
-    console.log(this.state.success)
+      this.setState({balance: newBalance, totalSupply: newSupply})})
   }
 
   handleAmount = (e) =>{
@@ -96,7 +94,7 @@ class App extends Component {
   handleApproval = (e) => {
     e.preventDefault(e)
     const { accounts, contractToken, contractSale } = this.state;
-    contractToken.methods._makePayment(accounts[0], this.state.approvalAddress).send({from: accounts[0]}).then(res => console.log(res))
+    contractToken.methods._makePayment(accounts[0], this.state.approvalAddress).send({from: accounts[0]})
     this.setState({approvalAddress: "", addressInput: false})
   }
 
