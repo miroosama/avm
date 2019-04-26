@@ -27,7 +27,7 @@ class QRModal extends Component {
       <div className="App">
         <Modal style={{opacity:".9"}} show={true} onHide={() => {this.props.closeModal("cancel")}}>
           <Modal.Header>
-            <Modal.Title>Process Unit</Modal.Title>
+            <Modal.Title>Generate Unit QR</Modal.Title>
           </Modal.Header>
             <Modal.Body>
               <Form onChange={this.handleAddress}>

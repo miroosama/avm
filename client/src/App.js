@@ -78,15 +78,14 @@ class App extends Component {
     contractSale.methods.buyTokens(this.state.amount).send({from: accounts[0], value: (this.state.amount * tokenPrice) , gas: 500000 }, (res) => {
       let newBalance = (parseFloat(this.state.balance) + parseFloat(this.state.amount))
       let newSupply = (parseFloat(this.state.totalSupply) - parseFloat(this.state.amount))
-      this.setState({balance: newBalance, totalSupply: newSupply})})
+      this.setState({balance: newBalance, totalSupply: newSupply, amount: ""})})
   }
 
   handleAmount = (e) =>{
     this.setState({ amount: e.target.value})
   }
 
-  handleUnit = (e, account, amount) =>{
-    e.preventDefault(e)
+  handleUnit = (account, amount) =>{
     const { accounts, contractToken, contractSale } = this.state;
     contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
   }
@@ -186,6 +185,8 @@ export default App;
 //24965a52d85b612bae2f80813683ff2ce126c12c
 //0x24965a52d85b612bae2f80813683ff2ce126c12c
 
+// geth --rinkeby --rpc --rpcapi="personal,eth,network,web3,net" --ipcpath "~/library/Ethereum/geth.ipc"
+
 // 0x4738a6634597C86Db71D2188b86523c2518fCef2
 
 // if contract error run a truffle migrate --reset
@@ -211,3 +212,41 @@ export default App;
 // status: true
 // transactionHash: "0x14947c261c6cfbd5e0121b8bf18871949c872ecb80759a54e2b74610404509ea"
 // transactionIndex: 0
+
+
+//make new accounts with geth
+//geth --rinkeby account new
+
+//Deploying ON RINKEBY
+
+//geth --rinkeby --rpc --rpcapi="personal,eth,network,web3,net" --ipcpath "~/library/Ethereum/geth.ipc" --syncmode "light"
+// geth attach then get or creat account and eth.syncing to check status of sync wait for false
+// personal.unlockAccount(eth.accounts[0], null, 1200)
+
+// with plus balance and synced then run
+//truffle migrate --reset --compile-all --network rinkeby
+
+// while account still unlocked run
+//var admin = eth.accounts[0]
+//var tokensAvailable = 750000
+// var tokenSaleAddress = '0xAe35FE3D228813c763f3D6D235467e37D1c57b7c' from the abi tokenSale
+//
+// then copy the abi (convert to pretty json online) and set it
+//
+// var abi = [json data]
+//
+// var tokenAddress = '0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa' from token abi (not tokenSale)
+// then get your token contract with web3
+// var TokenContract = web3.eth.contract(abi)
+// then get a token instance
+// var tokenInstance = TokenContract.at(tokenAddress)
+//
+// tokenInstance.name() to check if working
+// make transfer (account will still have to be unlocked)
+// tokenInstance.transfer(tokenSaleAddress,tokensAvailable, { from: admin })
+// tokenInstance.balanceOf(admin)
+// tokenInstance.balanceOf(tokenSaleAddress)
+
+//go to keystore. open and create json file then import to metamask.
+
+// add price of .001 ether to page
