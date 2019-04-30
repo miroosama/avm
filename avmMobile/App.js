@@ -6,9 +6,16 @@
  * @flow
  */
 
+ import './global';
+ import './shim'
+
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import QRScan from './QRScan.js'
+import 'babel-preset-react-native-web3/globals';
+const Web3 = require('web3')
+
+// const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"))
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,10 +25,19 @@ const instructions = Platform.select({
 });
 
 type Props = {};
+
 export default class App extends Component<Props> {
   state = {
     scan: false
   }
+
+  componentWillMount() {
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"')
+  );
+
+  web3.eth.getBlock('latest').then(console.log)
+}
 
   handleScanner = () => {
     this.setState({
