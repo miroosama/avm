@@ -13,7 +13,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import QRScan from './QRScan.js'
 import 'babel-preset-react-native-web3/globals';
-const Web3 = require('web3')
+import Web3 from 'web3'
 
 // const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"))
 
@@ -31,9 +31,9 @@ export default class App extends Component<Props> {
     scan: false
   }
 
-  componentWillMount() {
+  componentDidMount() {
   const web3 = new Web3(
-    new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"')
+    new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
   );
 
   web3.eth.getBlock('latest').then(console.log)
