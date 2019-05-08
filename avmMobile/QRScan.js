@@ -1,50 +1,59 @@
 import React, {Component} from 'react';
 import {
+  AppRegistry,
+  StyleSheet,
   Text,
-  View,
-  StyleSheet
+  TouchableOpacity,
+  Linking,
 } from 'react-native';
 
-import Camera from 'react-native-camera';
+import RNCamera from 'react-native-camera';
 
-export default class QRScan extends Component {
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            qrcode: ''
+export default class ScanScreen extends Component {
+  onSuccess = (e) => {
+    Linking
+      .openURL(e.data)
+      .catch(err => console.error('An error occured', err));
+  }
+
+  render() {
+    return (
+      <QRCodeScanner
+        onRead={this.onSuccess}
+        topContent={
+          <Text style={styles.centerText}>
+          </Text>
         }
-    }
-
-    onBarCodeRead = (e) => this.setState({qrcode: e.data});
-
-    render () {
-        return (
-            <View  style={styles.container}>
-                <Camera
-                    style={styles.preview}
-                    onBarCodeRead={this.onBarCodeRead}
-                    ref={cam => this.camera = cam}
-                    aspect={Camera.constants.Aspect.fill}
-                    >
-                        <Text style={{
-                            backgroundColor: 'white'
-                        }}>{this.state.qrcode}</Text>
-                    </Camera>
-            </View>
-        )
-    }
-
+        bottomContent={
+          <TouchableOpacity style={styles.buttonTouchable}>
+            <Text style={styles.buttonText}>OK. Got it!</Text>
+          </TouchableOpacity>
+        }
+      />
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  centerText: {
     flex: 1,
-    flexDirection: 'row',
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
   },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  }
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
 });
+
+// AppRegistry.registerComponent('default', () => ScanScreen);

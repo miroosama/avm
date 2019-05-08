@@ -11,7 +11,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
-import QRScan from './QRScan.js'
+import ScanScreen from './QRScan.js'
 import 'babel-preset-react-native-web3/globals';
 import Web3 from 'web3'
 
@@ -48,7 +48,7 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Button onPress={this.handleScanner} title="Scan">Scan</Button>
-        {this.state.scan ? <QRScan /> : null}
+        {this.state.scan ? <ScanScreen /> : null}
       </View>
     );
   }

@@ -3,6 +3,7 @@ package com.avmmobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.wix.RNCameraKit.RNCameraKitPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNCameraKitPackage(),
             new RandomBytesPackage(),
             new RNCameraPackage()
       );
