@@ -12,10 +12,18 @@ import RNCamera from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 export default class ScanScreen extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        qrcode: ''
+    }
+}
   onSuccess = (e) => {
-    Linking
-      .openURL(e.data)
-      .catch(err => console.error('An error occured', err));
+    this.setState({qrcode: e.data})
+    // Linking
+    //   this.setState({qrcode: e.data})
+    //   .catch(err => console.error('An error occured', err));
   }
 
   render() {
@@ -28,7 +36,7 @@ export default class ScanScreen extends Component {
         }
         bottomContent={
           <TouchableOpacity style={styles.buttonTouchable}>
-            <Text style={styles.buttonText}>OK. Got it!</Text>
+            <Text style={styles.buttonText}>{this.state.qrcode}</Text>
           </TouchableOpacity>
         }
       />
