@@ -28,7 +28,8 @@ type Props = {};
 
 export default class App extends Component<Props> {
   state = {
-    scan: false
+    scan: false,
+    latest: ""
   }
 
   componentDidMount() {
@@ -36,7 +37,7 @@ export default class App extends Component<Props> {
     new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
   );
 
-  web3.eth.getBlock('latest').then(console.log)
+  web3.eth.getBlock('latest').then(res => this.setState({latest: res.hash}))
 }
 
   handleScanner = () => {
@@ -49,6 +50,7 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <Button onPress={this.handleScanner} title="Scan">Scan</Button>
         {this.state.scan ? <ScanScreen /> : null}
+        <Text>Data: {this.state.latest}</Text>
       </View>
     );
   }
