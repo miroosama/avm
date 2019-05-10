@@ -12,9 +12,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import ScanScreen from './QRScan.js'
-import 'babel-preset-react-native-web3/globals';
+import 'babel-preset-react-native-web3/globals'
 import Web3 from 'web3'
-import HDWalletProvider from "truffle-hdwallet-provider"
+import AviumTokenContract from "./contractBuild/contracts/AviumToken.json"
 // const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"))
 
 const instructions = Platform.select({
@@ -30,7 +30,6 @@ export default class App extends Component<Props> {
   state = {
     scan: false,
     latest: "",
-    web3: ""
   }
 
   componentDidMount() {
@@ -39,10 +38,24 @@ export default class App extends Component<Props> {
   );
   // this.setState({web3: web3})
   web3.eth.getBlock('latest').then(res => this.setState({latest: res.hash}))
-  var provider = new HDWalletProvider("", 'https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
-  console.log(provider)
+
+  this.loadContract()
+
 }
 
+loadContract = async () => {
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
+  );
+  const networkId = await web3.eth.net.getId();
+  const deployedNetwork = AviumTokenContract.networks[networkId]
+  const instanceToken = new web3.eth.Contract(
+    AviumTokenContract.abi,
+    deployedNetwork && deployedNetwork.address,
+  );
+
+  console.log(instanceToken)
+}
   handleScanner = () => {
     this.setState({
       scan: !this.state.scan
