@@ -14,7 +14,7 @@ import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import ScanScreen from './QRScan.js'
 import 'babel-preset-react-native-web3/globals';
 import Web3 from 'web3'
-
+import HDWalletProvider from "truffle-hdwallet-provider"
 // const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"))
 
 const instructions = Platform.select({
@@ -29,15 +29,18 @@ type Props = {};
 export default class App extends Component<Props> {
   state = {
     scan: false,
-    latest: ""
+    latest: "",
+    web3: ""
   }
 
   componentDidMount() {
   const web3 = new Web3(
     new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
   );
-
+  // this.setState({web3: web3})
   web3.eth.getBlock('latest').then(res => this.setState({latest: res.hash}))
+  var provider = new HDWalletProvider("", 'https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
+  console.log(provider)
 }
 
   handleScanner = () => {
