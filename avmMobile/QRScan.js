@@ -21,6 +21,7 @@ export default class ScanScreen extends Component {
 }
   onSuccess = (e) => {
     this.setState({qrcode: e.data})
+    this.props.pendingPayment()
     // Linking
     //   this.setState({qrcode: e.data})
     //   .catch(err => console.error('An error occured', err));

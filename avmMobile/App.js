@@ -30,6 +30,7 @@ export default class App extends Component<Props> {
   state = {
     scan: false,
     latest: "",
+    contractToken: ""
   }
 
   componentDidMount() {
@@ -40,7 +41,7 @@ export default class App extends Component<Props> {
   web3.eth.getBlock('latest').then(res => this.setState({latest: res.hash}))
 
   this.loadContract()
-
+  // 1bb0c42529917f67e7a4052f7247b1f12c94ef84c9a341561301128cae14e78b
 }
 
 loadContract = async () => {
@@ -54,8 +55,15 @@ loadContract = async () => {
     deployedNetwork && deployedNetwork.address,
   );
 
-  console.log(instanceToken)
+  this.setState({contractToken: instanceToken})
 }
+
+  pendingPayment = () => {
+    // contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
+    this.state.contractToken.methods.balanceOf('0x24965a52D85b612bAE2f80813683Ff2Ce126C12C').call().then(res=>{console.log(parseInt(res))})
+}
+
+
   handleScanner = () => {
     this.setState({
       scan: !this.state.scan
@@ -65,7 +73,7 @@ loadContract = async () => {
     return (
       <View style={styles.container}>
         <Button onPress={this.handleScanner} title="Scan">Scan</Button>
-        {this.state.scan ? <ScanScreen /> : null}
+        {this.state.scan ? <ScanScreen pendingPayment={this.pendingPayment}/> : null}
         <Text>Data: {this.state.latest}</Text>
       </View>
     );
