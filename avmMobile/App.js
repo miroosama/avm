@@ -60,7 +60,8 @@ loadContract = async () => {
 
   pendingPayment = () => {
     // contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
-    this.state.contractToken.methods.balanceOf('0x24965a52D85b612bAE2f80813683Ff2Ce126C12C').call().then(res=>{console.log(parseInt(res))})
+    contractToken.methods._pendingPayment('0x24965a52D85b612bAE2f80813683Ff2Ce126C12C', 10).send({from: '0x24965a52D85b612bAE2f80813683Ff2Ce126C12C'}).then(res => console.log(res))
+    // this.state.contractToken.methods.balanceOf('0x24965a52D85b612bAE2f80813683Ff2Ce126C12C').call().then(res=>{console.log(parseInt(res))})
 }
 
 
