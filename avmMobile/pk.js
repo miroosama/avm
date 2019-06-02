@@ -1,5 +1,5 @@
 var keythereum = require("keythereum");
-var datadir = "";
+var datadir = "./Ethereum";
 var address= "0xc8096d713000002c77e4eb62f0000ead5f105a7e";
 const password = "mypass";
 
