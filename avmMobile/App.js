@@ -15,7 +15,7 @@ import ScanScreen from './QRScan.js'
 import 'babel-preset-react-native-web3/globals'
 import Web3 from 'web3'
 import AviumTokenContract from "./contractBuild/contracts/AviumToken.json"
-import ethereumjs from "ethereumjs-tx"
+const Tx = require('ethereumjs-tx');
 // const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4"))
 
 const instructions = Platform.select({
@@ -38,53 +38,50 @@ export default class App extends Component<Props> {
   const web3 = new Web3(
     new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
   );
-  this.setState({web3: web3})
-  web3.eth.getBlock('latest').then(res => this.setState({latest: res.hash}))
+    this.setState({web3: web3})
+    web3.eth.getBlock('latest').then(res => this.setState({latest: res.hash}))
 
-  this.loadContract()
-  // 1bb0c42529917f67e7a4052f7247b1f12c94ef84c9a341561301128cae14e78b
+    this.loadContract()
+    // 1bb0c42529917f67e7a4052f7247b1f12c94ef84c9a341561301128cae14e78b
 }
 
 loadContract = async () => {
   const web3 = new Web3(
     new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/3ae9e02bbab741769e12d6ea56bce8a4')
   );
-  const networkId = await web3.eth.net.getId();
-  const deployedNetwork = AviumTokenContract.networks[networkId]
-  const instanceToken = new web3.eth.Contract(
-    AviumTokenContract.abi,
-    deployedNetwork && deployedNetwork.address,
-  );
+    const networkId = await web3.eth.net.getId();
+    const deployedNetwork = AviumTokenContract.networks[networkId]
+    const instanceToken = new web3.eth.Contract(
+      AviumTokenContract.abi,
+      deployedNetwork && deployedNetwork.address,
+    );
 
   this.setState({contractToken: instanceToken})
 }
 
   pendingPayment = () => {
   const { web3 } = this.state;
-  console.dir(web3.eth.Contract)
-  web3.eth.getTransactionCount("0x24965a52d85b612bae2f80813683ff2ce126c12c", function (err, nonce) {
-  var data = web3.eth.Contract(AviumTokenContract.abi, "0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa")
-console.log(data)
-  var tx = new ethereumjs.Tx({
-    nonce: nonce,
-    gasPrice: 4700000,
-    gasLimit: 100000,
-    to: '0x66CBc037732FaE39dDc2725343580e4489Fc3d48',
-    value: 0,
-    data: data,
-  });
-  tx.sign(ethereumjs.Buffer.Buffer.from('', 'hex'));
-
-  var raw = '0x' + tx.serialize().toString('hex');
-  // web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
-  //   console.log(transactionHash);
-  // });
-  console.log(raw)
-});
-    // contractToken.methods._pendingPayment(account, amount).send({from: accounts[0]}).then(res => console.log(res))
-    // let data = this.state.contractToken.methods._pendingPayment('0x24965a52D85b612bAE2f80813683Ff2Ce126C12C', 10).send({from: '0x24965a52D85b612bAE2f80813683Ff2Ce126C12C'}).then(res => console.log(res))
-    // console.log(data)
-    // this.state.contractToken.methods.balanceOf('0x24965a52D85b612bAE2f80813683Ff2Ce126C12C').call().then(res=>{console.log(parseInt(res))})
+    web3.eth.getTransactionCount("0x24965a52d85b612bae2f80813683ff2ce126c12c", function (err, nonce) {
+    var data = new web3.eth.Contract(AviumTokenContract.abi, "0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa")
+    const contractFunction = data.methods._pendingPayment("0x66CBc037732FaE39dDc2725343580e4489Fc3d48", 10);
+    const functionAbi = contractFunction.encodeABI();
+    console.log(data)
+      var tx = new Tx({
+        nonce: nonce,
+        gasPrice: 4700000,
+        gasLimit: 100000,
+        to: "0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa",
+        value: 0,
+        data: functionAbi,
+      });
+    tx.sign(Buffer.from('', 'hex'));
+    console.log(tx)
+    var raw = '0x' + tx.serialize().toString('hex');
+    // web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+    //   console.log(transactionHash);
+    // });
+    console.log(raw)
+    }).catch(function(err){console.log(err)});
 }
 
 
