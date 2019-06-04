@@ -9,6 +9,10 @@ import QRTX from "./QRTX.js"
 import './style.css'
 import UnitFormModal from "./UnitFormModal.js"
 import QRModal from "./QRModal.js"
+import TransitionGroup from 'react-addons-transition-group';
+import About from "./About"
+import {TweenMax, Power1, TimelineLite} from "gsap";
+import GSAP from 'react-gsap-enhancer'
 
 import "./App.css";
 
@@ -26,7 +30,8 @@ class App extends Component {
      unitModal: false,
      approvalAddress: "",
      addressInput: false,
-     qrModal: false
+     qrModal: false,
+     about: false,
    };
 
   componentDidMount = async () => {
@@ -49,8 +54,6 @@ class App extends Component {
         AviumTokenSaleContract.abi,
         deployedNetwork && deployedNetwork2.address,
       );
-
-
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       console.log(AviumTokenContract.abi)
@@ -120,6 +123,10 @@ class App extends Component {
     this.setState({approvalAddress: e.target.value})
   }
 
+  handleAbout = () =>{
+    this.setState({ about: !this.state.about})
+  }
+
   render() {
     console.log(this.state.unitModal)
     if (!this.state.web3) {
@@ -130,6 +137,10 @@ class App extends Component {
         <div className="bkg" />
         <div className="me" />
         <h1>AVEMCOIN</h1>
+        <TransitionGroup>
+          {this.state.about && <About />}
+        </TransitionGroup>
+        <Button style={{marginBottom: "20px", fontWeight: "bold"}} variant="outline-dark" onClick={this.handleAbout}>About</Button>
         <h2>Purchase Token</h2>
         <h4>
           Total AVM Available: {this.state.totalSupply}
@@ -179,74 +190,3 @@ class App extends Component {
 
 
 export default App;
-
-
-//rinkeby address
-//24965a52d85b612bae2f80813683ff2ce126c12c
-//0x24965a52d85b612bae2f80813683ff2ce126c12c
-
-// geth --rinkeby --rpc --rpcapi="personal,eth,network,web3,net" --ipcpath "~/library/Ethereum/geth.ipc"
-
-// 0x4738a6634597C86Db71D2188b86523c2518fCef2
-
-// if contract error run a truffle migrate --reset
-// AviumTokenSale.deployed().then(function(i){tokenSale=i})
-// truffle(development)> AviumToken.deployed().then(function(i){token=i})
-// undefined
-// truffle(development)> web3.eth.getAccounts().then(function(accounts){ acc1 = accounts[0]})
-// undefined
-// truffle(development)> tokensAvailable = 750000
-// 750000
-// truffle(development)> token.transfer(tokenSale.address, tokensAvailable, { from: acc1})
-
-// build folder needs to be dragged into client folder
-
-
-// blockHash: "0x8e2e13cf060a851e9815f7a2fde6843b7ebb680d4f5cb9af81d556633a7974e7"
-// blockNumber: 17
-// contractAddress: null
-// cumulativeGasUsed: 46374
-// events: {0: {…}, Sell: {…}}
-// gasUsed: 46374
-// logsBloom: "0x04000000000000000000000000800000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000008000000000000000000002000000000000000000000000800000000000000000000040000000000000000100000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000010000000000000000000000000000002000000000000000000000000000000000000000000000001000000000100000000000010000002000000004000000000000000000000000000000000"
-// status: true
-// transactionHash: "0x14947c261c6cfbd5e0121b8bf18871949c872ecb80759a54e2b74610404509ea"
-// transactionIndex: 0
-
-
-//make new accounts with geth
-//geth --rinkeby account new
-
-//Deploying ON RINKEBY
-
-//geth --rinkeby --rpc --rpcapi="personal,eth,network,web3,net" --ipcpath "~/library/Ethereum/geth.ipc" --syncmode "light"
-// geth attach then get or creat account and eth.syncing to check status of sync wait for false
-// personal.unlockAccount(eth.accounts[0], null, 1200)
-
-// with plus balance and synced then run
-//truffle migrate --reset --compile-all --network rinkeby
-
-// while account still unlocked run
-//var admin = eth.accounts[0]
-//var tokensAvailable = 750000
-// var tokenSaleAddress = '0xAe35FE3D228813c763f3D6D235467e37D1c57b7c' from the abi tokenSale
-//
-// then copy the abi (convert to pretty json online) and set it
-//
-// var abi = [json data]
-//
-// var tokenAddress = '0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa' from token abi (not tokenSale)
-// then get your token contract with web3
-// var TokenContract = web3.eth.contract(abi)
-// then get a token instance
-// var tokenInstance = TokenContract.at(tokenAddress)
-//
-// tokenInstance.name() to check if working
-// make transfer (account will still have to be unlocked)
-// tokenInstance.transfer(tokenSaleAddress,tokensAvailable, { from: admin })
-// tokenInstance.balanceOf(admin)
-// tokenInstance.balanceOf(tokenSaleAddress)
-
-//go to keystore. open and create json file then import to metamask.
-
-// add price of .001 ether to page

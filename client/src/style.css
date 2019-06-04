@@ -38,3 +38,19 @@ form {
   font-weight: bold;
   background-color: transparent;
 }
+
+.news1 {
+  position:absolute;
+  display: block;
+  /* background-image:url(./img/blSLYcopy.png); */
+  background-color: #190A53;
+  opacity: .2;
+  /* background: black; */
+  border-radius: 50%;
+  height: 1200px;
+  width: 1200px;
+  top:-5px;
+  margin: 0;
+  /* background: radial-gradient(circle at 200px 200px, #5cabff, #000); */
+  z-index: 4;
+}
