@@ -65,6 +65,7 @@ class App extends Component {
       );
       console.error(error);
     }
+    // this.setState({about: true})
   };
 
   runExample = async () => {
@@ -137,10 +138,6 @@ class App extends Component {
         <div className="bkg" />
         <div className="me" />
         <h1>AVEMCOIN</h1>
-        <TransitionGroup>
-          {this.state.about && <About />}
-        </TransitionGroup>
-        <Button style={{marginBottom: "20px", fontWeight: "bold"}} variant="outline-dark" onClick={this.handleAbout}>About</Button>
         <h2>Purchase Token</h2>
         <h4>
           Total AVM Available: {this.state.totalSupply}
@@ -183,6 +180,10 @@ class App extends Component {
           <Button style={{fontWeight: "bold"}} variant="outline-dark" onClick={() => {this.openUnitModal("qr")}}>Create QR</Button>
             {this.state.qrModal ? <QRModal closeModal={this.closeModal} accountFrom={this.state.accounts[0]} /> : null }
         </div>
+        <TransitionGroup>
+          {this.state.about && <About />}
+        </TransitionGroup>
+        <button onClick={this.handleAbout} class="button">Toggle About</button>
       </div>
     );
   }

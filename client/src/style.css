@@ -52,5 +52,61 @@ form {
   top:-5px;
   margin: 0;
   /* background: radial-gradient(circle at 200px 200px, #5cabff, #000); */
+  z-index: 3;
+}
+.infoDiv {
+  position:absolute;
+  /* display: block; */
+  z-index: 4;
+  /* left: ; */
+  color: white;
+  /* padding: 20px; */
+  text-align: left;
+  top: 15%;
+  left:30%;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  font-weight: bold;
+}
+.mo {
+left:30%;
+display: inline-block;
+margin: 10px 200px 10px 70px;
+}
+
+.nbor {
+position:absolute;
+display: block;
+left:20%;
+margin: 10px 200px 10px 70px;
+}
+
+.images {
+  position:absolute;
+  display: block;
+  /* left:10px; */
+}
+.descr {
+position:absolute;
+left:25%;
+display: block;
+margin: 100px 200px 10px 20px;
+}
+.button {
+  font-weight: bold;
+  position:absolute;
+  display: block;
+  background-color: #190A53; /* Green */
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  left: 20%;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 50%;
   z-index: 4;
 }
