@@ -183,7 +183,7 @@ class App extends Component {
         <TransitionGroup>
           {this.state.about && <About />}
         </TransitionGroup>
-        <button onClick={this.handleAbout} class="button">Toggle About</button>
+        <button onClick={this.handleAbout} class="button">About</button>
       </div>
     );
   }

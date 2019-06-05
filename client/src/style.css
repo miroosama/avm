@@ -68,31 +68,31 @@ form {
   display: inline-block;
   margin: 4px 2px;
   font-weight: bold;
-}
-.mo {
-left:30%;
-display: inline-block;
-margin: 10px 200px 10px 70px;
-}
+  }
+  .mo {
+  left:30%;
+  display: inline-block;
+  margin: 10px 200px 10px 70px;
+  }
 
-.nbor {
-position:absolute;
-display: block;
-left:20%;
-margin: 10px 200px 10px 70px;
-}
-
-.images {
+  .nbor {
   position:absolute;
   display: block;
-  /* left:10px; */
-}
-.descr {
-position:absolute;
-left:25%;
-display: block;
-margin: 100px 200px 10px 20px;
-}
+  left:20%;
+  margin: 10px 200px 10px 70px;
+  }
+
+  .images {
+    position:absolute;
+    display: block;
+    /* left:10px; */
+  }
+  .descr {
+  position:absolute;
+  left:25%;
+  display: block;
+  margin: 100px 200px 10px 20px;
+  }
 .button {
   font-weight: bold;
   position:absolute;
