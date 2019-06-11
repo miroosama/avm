@@ -131,7 +131,7 @@ class App extends Component {
   render() {
     console.log(this.state.unitModal)
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return <div>Loading Web3, accounts, and contract... (Requires Metamask extension)</div>;
     }
     return (
       <div className="App">

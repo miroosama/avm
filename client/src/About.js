@@ -40,7 +40,7 @@ componentWillLeave (callback) {
                 </p>
                 <p className="descr">Our current functionality provides a user the ability to represent goods with pending payments that can later be approved.
                 Designed to optimize the relationship between manufacturers and distributors, both parties agree on a value per unit. Enter the value and recipient (manufacturer) address in the Create QR form. Through the mobile app (available Summer 2019) scan the
-                generated QR code found on the physical unit that contains the agreed upon unit information and cements the pending payment onto the blockchain. Once all the units are accounted for upon arrival Approve Unit Payment will send the combined unit values to the recipients AVM account to provide minimal transaction fees.
+                generated QR code found on the physical unit that contains the agreed upon unit information and cements the pending payment onto the blockchain. Once all the units are accounted for upon arrival Approve Unit Payment will send the combined unit values to the recipient's AVM account to provide minimal transaction fees.
                 </p>
           </div>
           : null

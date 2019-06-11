@@ -31,7 +31,8 @@ export default class App extends Component<Props> {
   state = {
     scan: false,
     latest: "",
-    contractToken: ""
+    contractToken: "",
+    unsignedTXs: [],
   }
 
   componentDidMount() {
@@ -82,6 +83,8 @@ loadContract = async () => {
     // });
     console.log(raw)
     }).catch(function(err){console.log(err)});
+    this.setState({unsignedTxs: [...this.state.unsignedTXs, raw]})
+    console.log(this.state.unsignedTXs)
 }
 
 
