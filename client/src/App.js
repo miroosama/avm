@@ -60,7 +60,7 @@ class App extends Component {
       if(instanceTokenSale.address !== undefined){
       this.setState({ web3, accounts, contractToken: instanceToken, contractSale: instanceTokenSale }, this.runExample)
     } else {
-      console.log("here")
+      console.log("loading")
     };
     } catch (error) {
       // Catch any errors for any of the above operations.
