@@ -56,8 +56,12 @@ class App extends Component {
       );
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      console.log(AviumTokenContract.abi)
-      this.setState({ web3, accounts, contractToken: instanceToken, contractSale: instanceTokenSale }, this.runExample);
+      console.log(instanceTokenSale.address)
+      if(instanceTokenSale.address !== undefined){
+      this.setState({ web3, accounts, contractToken: instanceToken, contractSale: instanceTokenSale }, this.runExample)
+    } else {
+      console.log("here")
+    };
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -131,7 +135,15 @@ class App extends Component {
   render() {
     console.log(this.state.unitModal)
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract... (Requires Metamask extension)</div>;
+      return <div className="App">
+              <div className="me" />
+              <div className="bkg" />
+              <div style={{marginBottom:"20px"}}>Loading Web3, accounts, and contract...</div>
+              <p>Please visit <a href="https://metamask.io/" target="_blank">Metamask</a> to download the Metamask Google Chrome extension and create or import your Ethereum account to get started</p>
+              <img src="https://cdn-images-1.medium.com/max/1200/1*pGyNYTNmc_gZskdXH0enKQ.png" height="30%" width="30%"/>
+              <p style={{marginTop:"30px"}}>Once you have logged into Metamask please select the Rinkeby network where our AVM smart contracts are currently deployed</p>
+              <img src="https://cdn-images-1.medium.com/max/953/1*yRHg1YaldBSlzvJOSFtiTw.png" alt="metamask" height="300" width="300"/>
+            </div>;
     }
     return (
       <div className="App">
@@ -183,7 +195,7 @@ class App extends Component {
         <TransitionGroup>
           {this.state.about && <About />}
         </TransitionGroup>
-        <button onClick={this.handleAbout} class="button">About</button>
+        <button onClick={this.handleAbout} className="button">About</button>
       </div>
     );
   }
