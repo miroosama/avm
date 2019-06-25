@@ -62,12 +62,12 @@ loadContract = async () => {
 
   pendingPayment = () => {
   const { web3 } = this.state;
-    web3.eth.getTransactionCount("0x24965a52d85b612bae2f80813683ff2ce126c12c", function (err, nonce) {
-    var data = new web3.eth.Contract(AviumTokenContract.abi, "0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa")
+    web3.eth.getTransactionCount("0x24965a52d85b612bae2f80813683ff2ce126c12c", (err, nonce) => {
+    let data = new web3.eth.Contract(AviumTokenContract.abi, "0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa")
     const contractFunction = data.methods._pendingPayment("0x66CBc037732FaE39dDc2725343580e4489Fc3d48", 10);
     const functionAbi = contractFunction.encodeABI();
     console.log(data)
-      var tx = new Tx({
+      let tx = new Tx({
         nonce: nonce,
         gasPrice: 4700000,
         gasLimit: 100000,
@@ -75,17 +75,22 @@ loadContract = async () => {
         value: 0,
         data: functionAbi,
       });
-    tx.sign(Buffer.from('ccddf04d5bdebf26abb65ed3fa5916374ad42df45242c35b1e873bfc28582827', 'hex'));
+    tx.sign(Buffer.from('', 'hex'));
     console.log(tx)
-    var raw = '0x' + tx.serialize().toString('hex');
-    // web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
-    //   console.log(transactionHash);
-    // });
+    let raw = '0x' + tx.serialize().toString('hex');
     console.log(raw)
+    let newTxs = this.state.unsignedTXs
+    newTxs.push(raw)
+    this.setState({unsignedTXs: newTxs})
     }).catch(function(err){console.log(err)});
-    this.setState({unsignedTxs: [...this.state.unsignedTXs, raw]})
     console.log(this.state.unsignedTXs)
 }
+
+  sendRawTXs = () =>{
+    web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+      console.log(transactionHash);
+    });
+  }
 
 
   handleScanner = () => {
