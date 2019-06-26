@@ -75,7 +75,7 @@ loadContract = async () => {
         value: 0,
         data: functionAbi,
       });
-    tx.sign(Buffer.from('', 'hex'));
+    tx.sign(Buffer.from('ccddf04d5bdebf26abb65ed3fa5916374ad42df45242c35b1e873bfc28582827', 'hex'));
     console.log(tx)
     let raw = '0x' + tx.serialize().toString('hex');
     console.log(raw)
