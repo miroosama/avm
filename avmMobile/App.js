@@ -60,11 +60,12 @@ loadContract = async () => {
   this.setState({contractToken: instanceToken})
 }
 
-  pendingPayment = () => {
+  pendingPayment = (info) => {
+  console.log(info)
   const { web3 } = this.state;
     web3.eth.getTransactionCount("0x24965a52d85b612bae2f80813683ff2ce126c12c", (err, nonce) => {
     let data = new web3.eth.Contract(AviumTokenContract.abi, "0x2dE38B41347bECCCC7fdaAb72752F91A6E47C6fa")
-    const contractFunction = data.methods._pendingPayment("0x66CBc037732FaE39dDc2725343580e4489Fc3d48", 10);
+    const contractFunction = data.methods._pendingPayment(info.argsDefaults[0].value, info.argsDefaults[1].value);
     const functionAbi = contractFunction.encodeABI();
     console.log(data)
       let tx = new Tx({
@@ -87,9 +88,12 @@ loadContract = async () => {
 }
 
   sendRawTXs = () =>{
-    web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
-      console.log(transactionHash);
-    });
+    const { web3 } = this.state
+    this.state.unsignedTXs.forEach(raw => {
+      web3.eth.sendSignedTransaction(raw, function (err, transactionHash) {
+        console.log(transactionHash);
+      });
+    })
   }
 
 
@@ -104,6 +108,7 @@ loadContract = async () => {
         <Button onPress={this.handleScanner} title="Scan">Scan</Button>
         {this.state.scan ? <ScanScreen pendingPayment={this.pendingPayment}/> : null}
         <Text>Data: {this.state.latest}</Text>
+        <Button onPress={this.sendRawTXs} title="Send AVM">Send AVM</Button>
       </View>
     );
   }
