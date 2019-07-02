@@ -45,6 +45,7 @@ class QRModal extends Component {
                 <QRTX account={this.props.accountFrom} to={this.state.account} amount={this.state.amount}/>
               </Modal.Body>
           <Modal.Footer>
+            <Button variant="light">Print</Button>
             <Button variant="light" onClick={() => {this.props.closeModal("cancel")}}>Close</Button>
           </Modal.Footer>
         </Modal>;
