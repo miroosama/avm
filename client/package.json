@@ -11,7 +11,7 @@
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.7.0-alpha.2",
     "react-gsap-enhancer": "^0.3.0",
-    "react-scripts": "^3.0.0",
+    "react-scripts": "^5.0.1",
     "truffle": "^5.0.13",
     "web3": "^1.0.0-beta.52"
   },
